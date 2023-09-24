@@ -1,6 +1,5 @@
 using Catalog.API.Data;
 using Catalog.API.Repositories;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
