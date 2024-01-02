@@ -21,6 +21,8 @@ public class OrderContext : DbContext
                 case EntityState.Added:
                     entry.Entity.CreatedDate = DateTime.Now;
                     entry.Entity.CreatedBy = "admin";
+                    entry.Entity.LastModifiedDate = DateTime.Now;
+                    entry.Entity.LastModifiedBy = "admin";
                     break;
                 case EntityState.Modified:
                     entry.Entity.LastModifiedDate = DateTime.Now;

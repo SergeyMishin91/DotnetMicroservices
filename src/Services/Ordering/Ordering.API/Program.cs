@@ -1,5 +1,6 @@
 using Ordering.Application;
 using Ordering.Infrastructure;
+using Ordering.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +10,9 @@ builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+builder.Services.AddScoped<OrderContextSeed>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -22,8 +25,20 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+SeedDatabase();
+
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+
+
+void SeedDatabase()
+{
+    using var scope = app.Services.CreateScope();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<OrderContextSeed>>();
+    var orderContext = scope.ServiceProvider.GetRequiredService<OrderContext>();
+
+    OrderContextSeed.SeedDataAsync(orderContext, logger).Wait();
+}
