@@ -1,3 +1,4 @@
+using Ocelot.Cache.CacheManager;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -14,6 +15,7 @@ builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
 });
 #pragma warning restore ASP0013 // Suggest switching from using Configure methods to WebApplicationBuilder.Configuration
 
+builder.Services.AddLogging();
 var loggingConfig = builder.Configuration.GetSection("Logging");
 
 builder.Logging
@@ -21,9 +23,9 @@ builder.Logging
     .AddConsole()
     .AddDebug();
 
-builder.Services.AddOcelot();
-builder.Services.AddLogging();
-
+builder.Services
+    .AddOcelot()
+    .AddCacheManager(settings => settings.WithDictionaryHandle());
 
 var app = builder.Build();
 
