@@ -6,9 +6,9 @@ namespace Basket.API.Repositories
 {
     public interface IBasketRepository
     {
-        Task<ShoppingCart> GetBasketAsync(string username);
+        Task<ShoppingCart?> GetBasketAsync(string username);
 
-        Task<ShoppingCart> UpdateBasketAsync(ShoppingCart basket);
+        Task<ShoppingCart?> UpdateBasketAsync(ShoppingCart basket);
 
         Task DeleteBasketAsync(string username);
     }
@@ -22,7 +22,7 @@ namespace Basket.API.Repositories
             _redisCache = redisCache;
         }
 
-        public async Task<ShoppingCart> GetBasketAsync(string username)
+        public async Task<ShoppingCart?> GetBasketAsync(string username)
         {
             var basket = await _redisCache.GetStringAsync(username);
 
@@ -34,7 +34,7 @@ namespace Basket.API.Repositories
             return JsonSerializer.Deserialize<ShoppingCart>(basket);
         }
 
-        public async Task<ShoppingCart> UpdateBasketAsync(ShoppingCart basket)
+        public async Task<ShoppingCart?> UpdateBasketAsync(ShoppingCart basket)
         {
             await _redisCache.SetStringAsync(basket.Username,
                 JsonSerializer.Serialize(basket));
