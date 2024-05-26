@@ -2,21 +2,20 @@
 using Shopping.Aggregator.Models;
 using Shopping.Aggregator.Services.Interfaces;
 
-namespace Shopping.Aggregator.Services
+namespace Shopping.Aggregator.Services;
+
+public class OrderService : IOrderService
 {
-    public class OrderService : IOrderService
+    private readonly HttpClient _client;
+
+    public OrderService(HttpClient client)
     {
-        private readonly HttpClient _httpClient;
+        _client = client;
+    }
 
-        public OrderService()
-        {
-            _httpClient = new HttpClient();
-        }
-
-        public async Task<IEnumerable<OrderResponseModel>> GetOrdersByUserName(string userName)
-        {
-            var httpResponseMessage = await _httpClient.GetAsync($"/api/v1/Order/{userName}");
-            return await httpResponseMessage.ReadContentAs<List<OrderResponseModel>>();
-        }
+    public async Task<IEnumerable<OrderResponseModel>> GetOrdersByUserName(string userName)
+    {
+        var response = await _client.GetAsync($"/api/v1/Order/{userName}");
+        return await response.ReadContentAs<List<OrderResponseModel>>();
     }
 }

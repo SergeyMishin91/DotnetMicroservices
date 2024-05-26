@@ -11,11 +11,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpClient<ICatalogService, CatalogService>(c =>
-    c.BaseAddress = new Uri(builder.Configuration.GetSection("ApiSettings: CatalogUrl").Value!));
+    c.BaseAddress = new Uri(builder.Configuration.GetSection("ApiSettings:CatalogUrl").Value!));
 builder.Services.AddHttpClient<IBasketService, BasketService>(c =>
-    c.BaseAddress = new Uri(builder.Configuration.GetSection("ApiSettings: BasketUrl").Value!));
+    c.BaseAddress = new Uri(builder.Configuration.GetSection("ApiSettings:BasketUrl").Value!));
 builder.Services.AddHttpClient<IOrderService, OrderService>(c =>
-    c.BaseAddress = new Uri(builder.Configuration.GetSection("ApiSettings: OrderingUrl").Value!));
+    c.BaseAddress = new Uri(builder.Configuration.GetSection("ApiSettings:OrderingUrl").Value!));
 
 var app = builder.Build();
 

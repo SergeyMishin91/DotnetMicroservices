@@ -1,7 +1,6 @@
 ﻿using Shopping.Aggregator.Extensions;
 using Shopping.Aggregator.Models;
 using Shopping.Aggregator.Services.Interfaces;
-using System.Net.Http;
 
 namespace Shopping.Aggregator.Services
 {
